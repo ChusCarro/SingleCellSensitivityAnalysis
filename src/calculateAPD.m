@@ -1,11 +1,11 @@
-function [APD90,APD_time,maxV_v,minV_v] = calculateAPD(V,dt)
+function [APD,APD_time,maxV_v,minV_v] = calculateAPD(V,dt,perc)
 
 minV=V(1);
 maxV=Inf;
 maxDiff=0.001;
 maxDiff_ind = 0;
 
-APD90=[];
+APD=[];
 APD_time = [];
 maxV_v=[];
 minV_v=[];
@@ -30,10 +30,10 @@ for i=2:length(V)
     end
     
     if(maxDiff_ind>0)
-        nov = maxV - (maxV-minV)*0.9;
+        nov = maxV - (maxV-minV)*perc;
         if(V(i)<nov)
             APD_n = APD_n +1;
-            APD90(APD_n) = (i-maxDiff_ind)*dt;
+            APD(APD_n) = (i-maxDiff_ind)*dt;
             APD_time(APD_n) = maxDiff_ind*dt;
             maxV_v(APD_n) = maxV;
             minV_v(APD_n) = minV;

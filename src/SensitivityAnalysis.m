@@ -1,7 +1,7 @@
-function SensitivityAnalysis(cores, pathToSave, mainTestEM, project, cellType, param, values, dt, step_save,...
+function SensitivityAnalysis(cores, pathToSave, mainTestEM, cellType, param, values, dt, step_save,...
                        Imax, Istep, CL, nCLs)
 
-%matlabpool(cores)
+matlabpool(cores)
 
 [SUCCESS,MESSAGE] = mkdir(pathToSave);
 
@@ -18,8 +18,8 @@ end
 
 Param_str = cell(length(param));
 
-%[conduction, IThreshold, Istim] = calculateIThreshold(pathToSave, Imax, Istep, dt,project)
+[conduction, IThreshold, Istim] = calculateIThreshold(pathToSave, cellType, Imax, Istep, dt, step_save)
 
-%simulateSteadyState(pathToSave,param,values,length(nodes),CL,nCLs,dt,project);
+simulateSteadyState(pathToSave,cellType,param,values,CL,nCLs,dt,step_save);
 
-%matlabpool close;
+matlabpool close;
