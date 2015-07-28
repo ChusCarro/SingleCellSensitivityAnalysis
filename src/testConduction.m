@@ -2,7 +2,7 @@ function [conduction, CV, APD90] = testConduction(V,dt,numStim)
 
 conduction = false;
 
-[APD90,APD_time]= calculateAPD(V,dt)
+[APD90,APD_time]= calculateAPD(V,dt,0.9);
 
 if(numStim~=length(APD90))
     conduction=false;

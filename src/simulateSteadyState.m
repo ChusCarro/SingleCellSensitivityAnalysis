@@ -1,4 +1,6 @@
-function simulateSteadyState(pathToSave, cellType, param, values, CL, nCLs, dt, step_save)
+function simulateSteadyState(pathToSave, cellType, param, values, CL, nCLs, Cai_ind, dt, step_save)
+
+Cai_ind
 
 initialPath=pwd();
 sim_stat = load([pathToSave '/status.mat']);
@@ -18,7 +20,7 @@ pathSS  = [pathToSave '/SS' num2str(CL)];
 if(isempty(dir([pathSS '/control'])))
 
     copyfile([pathSS '/base'],[pathSS '/control'])
-    createMainFile([pathSS '/control'],'main_file_SS',cellType,[],[],CL*nCLs,dt,step_save,stimulus);
+    createMainFile([pathSS '/control'],'main_file_SS',cellType,[],[],CL*nCLs,dt,step_save,stimulus,true);
 
     cd([pathSS '/control']);
     ! ./runtestem data/main_file_SS.dat post/SS
@@ -27,12 +29,17 @@ end
 a=load([pathSS '/control/post/SS_stat.dat']);
 dt_results = a(2,end)-a(1,end);
 V=a(:,end-1);
+Cai=a(:,Cai_ind);
 [APD90,APD_time]= calculateAPD(V,dt_results,0.9);
 Trian = APD90-calculateAPD(V,dt_results,0.5);
+Diastolic = calculateDiastolic(Cai,dt_results);
+Systolic = calculateSystolic(Cai,dt_results);
 
 sim_stat.(['SS' num2str(CL)]).control.APD90 = APD90;
 sim_stat.(['SS' num2str(CL)]).control.APD_time = APD_time;
 sim_stat.(['SS' num2str(CL)]).control.Trian = Trian;
+sim_stat.(['SS' num2str(CL)]).control.Diastolic = Diastolic;
+sim_stat.(['SS' num2str(CL)]).control.Systolic = Systolic;
 save([pathToSave '/status.mat'],'-struct','sim_stat');
     
 
@@ -51,7 +58,7 @@ for i=1:length(param)
 
     if(isempty(dir(pathValue)))
       copyfile([pathParam '/base'],pathValue)
-      createMainFile(pathValue,'main_file_SS',cellType,param(i),values(j),CL*nCLs,dt,step_save,stimulus);
+      createMainFile(pathValue,'main_file_SS',cellType,param(i),values(j),CL*nCLs,dt,step_save,stimulus,true);
 
       cd(pathValue);
       ! ./runtestem data/main_file_SS.dat post/SS
@@ -68,12 +75,17 @@ for i=1:length(param)
     a=load([pathValue '/post/SS_stat.dat']);
     dt_results = a(2,end)-a(1,end);
     V=a(:,end-1);
+    Cai=a(:,Cai_ind);
     [APD90,APD_time]= calculateAPD(V,dt_results,0.9);
     Trian = APD90 - calculateAPD(V,dt_results,0.5);
+    Diastolic = calculateDiastolic(Cai,dt_results);
+    Systolic = calculateSystolic(Cai,dt_results);
 
     sim_stat.(['SS' num2str(CL)]).variations.APD90{i,j} = APD90;
     sim_stat.(['SS' num2str(CL)]).variations.APD_time{i,j} = APD_time;
     sim_stat.(['SS' num2str(CL)]).variations.Trian{i,j} = Trian;
+    sim_stat.(['SS' num2str(CL)]).variations.Diastolic{i,j} = Diastolic;
+    sim_stat.(['SS' num2str(CL)]).variations.Systolic{i,j} = Systolic;
 
   end
 end

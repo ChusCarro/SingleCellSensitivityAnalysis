@@ -52,7 +52,7 @@ if(~isfield(sim_stat,'maxIStim'))
     copyfile([pathToSave '/base'],[pathToSave '/' Istim_str])
     stimulus{1}.Istim = Imax;
 
-    createMainFile([pathToSave '/' Istim_str],'main_file_IThreshold',cellType,[],[],5000,dt,step_save,stimulus);
+    createMainFile([pathToSave '/' Istim_str],'main_file_IThreshold',cellType,[],[],5000,dt,step_save,stimulus,false);
 
     cd([pathToSave '/' Istim_str]);
     ! ./runtestem data/main_file_IThreshold.dat post/IThreshold
@@ -89,7 +89,7 @@ while(sim_stat.maxIStim-sim_stat.minIStim-sim_stat.IStep>1e-3)
     copyfile([pathToSave '/base'],[pathToSave '/' Istim_str])
     
     stimulus{1}.Istim = Istim;
-    createMainFile([pathToSave '/' Istim_str],'main_file_IThreshold',cellType,[],[],5000,dt,step_save,stimulus);
+    createMainFile([pathToSave '/' Istim_str],'main_file_IThreshold',cellType,[],[],5000,dt,step_save,stimulus,false);
 
     cd([pathToSave '/' Istim_str])
      ! ./runtestem data/main_file_IThreshold.dat post/IThreshold

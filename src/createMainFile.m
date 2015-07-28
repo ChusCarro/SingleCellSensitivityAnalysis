@@ -1,4 +1,4 @@
-function createMainFile(pathToSave,fileName,cellType,param,values,duration,dt,step_save,stimulus)
+function createMainFile(pathToSave,fileName,cellType,param,values,duration,dt,step_save,stimulus,last)
 
 f=fopen([pathToSave '/data/' fileName '.dat'],'w');
 
@@ -25,6 +25,10 @@ for i=1:length(stimulus)
   fprintf(f,[num2str(stimulus{i}.ini) ' ' num2str(stimulus{i}.CL) ' ' num2str(stimulus{i}.dur) ' ' num2str(stimulus{i}.Istim) '\n']);
 end
 fprintf(f,'#POST\n');
+if(last)
+fprintf(f,[num2str((duration-stimulus{length(stimulus)}.CL)/dt) ' ' num2str(step_save) '\n']);
+else
 fprintf(f,['0 ' num2str(step_save) '\n']);
+end
 fprintf(f,'#END\n');
 fclose(f);
