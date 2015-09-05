@@ -30,16 +30,32 @@ a=load([pathSS '/control/post/SS_stat.dat']);
 dt_results = a(2,end)-a(1,end);
 V=a(:,end-1);
 Cai=a(:,Cai_ind);
-[APD90,APD_time]= calculateAPD(V,dt_results,0.9);
-Trian = APD90-calculateAPD(V,dt_results,0.5);
+[APD90, APD_time] = calculateAPD(V,dt_results,0.90);
+APD75 = calculateAPD(V,dt_results,0.75);
+APD50 = calculateAPD(V,dt_results,0.50);
+APD25 = calculateAPD(V,dt_results,0.25);
+APD10 = calculateAPD(V,dt_results,0.10);
+Trian = APD90-APD50;
 Diastolic = calculateDiastolic(Cai,dt_results);
 Systolic = calculateSystolic(Cai,dt_results);
+maxV = max(V);
+minV = min(V);
+maxdVdt = max(diff(V)/dt_results);
+mindVdt = min(diff(V)/dt_results);
 
 sim_stat.(['SS' num2str(CL)]).control.APD90 = APD90;
+sim_stat.(['SS' num2str(CL)]).control.APD75 = APD75;
+sim_stat.(['SS' num2str(CL)]).control.APD50 = APD50;
+sim_stat.(['SS' num2str(CL)]).control.APD25 = APD25;
+sim_stat.(['SS' num2str(CL)]).control.APD10 = APD10;
 sim_stat.(['SS' num2str(CL)]).control.APD_time = APD_time;
 sim_stat.(['SS' num2str(CL)]).control.Trian = Trian;
 sim_stat.(['SS' num2str(CL)]).control.Diastolic = Diastolic;
 sim_stat.(['SS' num2str(CL)]).control.Systolic = Systolic;
+sim_stat.(['SS' num2str(CL)]).control.maxV = maxV;
+sim_stat.(['SS' num2str(CL)]).control.minV = minV;
+sim_stat.(['SS' num2str(CL)]).control.maxdVdt = maxdVdt;
+sim_stat.(['SS' num2str(CL)]).control.mindVdt = mindVdt;
 save([pathToSave '/status.mat'],'-struct','sim_stat');
     
 
@@ -76,16 +92,32 @@ for i=1:length(param)
     dt_results = a(2,end)-a(1,end);
     V=a(:,end-1);
     Cai=a(:,Cai_ind);
-    [APD90,APD_time]= calculateAPD(V,dt_results,0.9);
-    Trian = APD90 - calculateAPD(V,dt_results,0.5);
+    [APD90,APD_time]= calculateAPD(V,dt_results,0.90);
+    APD75 = calculateAPD(V,dt_results,0.75);
+    APD50 = calculateAPD(V,dt_results,0.50);
+    APD25 = calculateAPD(V,dt_results,0.25);
+    APD10 = calculateAPD(V,dt_results,0.10);
+    Trian = APD90 - APD50;
     Diastolic = calculateDiastolic(Cai,dt_results);
     Systolic = calculateSystolic(Cai,dt_results);
-
+    maxV = max(V);
+    minV = min(V);
+    maxdVdt = max(diff(V)/dt_results);
+    mindVdt = min(diff(V)/dt_results);
+ 
     sim_stat.(['SS' num2str(CL)]).variations.APD90{i,j} = APD90;
+    sim_stat.(['SS' num2str(CL)]).variations.APD75{i,j} = APD75;
+    sim_stat.(['SS' num2str(CL)]).variations.APD50{i,j} = APD50;
+    sim_stat.(['SS' num2str(CL)]).variations.APD25{i,j} = APD25;
+    sim_stat.(['SS' num2str(CL)]).variations.APD10{i,j} = APD10;
     sim_stat.(['SS' num2str(CL)]).variations.APD_time{i,j} = APD_time;
     sim_stat.(['SS' num2str(CL)]).variations.Trian{i,j} = Trian;
     sim_stat.(['SS' num2str(CL)]).variations.Diastolic{i,j} = Diastolic;
     sim_stat.(['SS' num2str(CL)]).variations.Systolic{i,j} = Systolic;
+    sim_stat.(['SS' num2str(CL)]).variations.maxV{i,j} = maxV;
+    sim_stat.(['SS' num2str(CL)]).variations.minV{i,j} = minV;
+    sim_stat.(['SS' num2str(CL)]).variations.maxdVdt{i,j} = maxdVdt;
+    sim_stat.(['SS' num2str(CL)]).variations.mindVdt{i,j} = mindVdt;
 
   end
 end
