@@ -1,4 +1,4 @@
-function [conduction,IThreshold,IStim] = calculateIThreshold(pathToSave, cellType, Imax, IStep, dt, step_save)
+function [conduction,IThreshold,IStim] = calculateIThreshold(pathToSave, cellType, Imax, IStep, Idur, dt, step_save)
 
 initialPath=pwd();
 conduction =false;
@@ -7,7 +7,7 @@ IStim = [];
 
 stimulus{1}.ini = 0;
 stimulus{1}.CL = 1000;
-stimulus{1}.dur = 1;
+stimulus{1}.dur = Idur;
 
 file = dir([pathToSave '/status.mat']);
 

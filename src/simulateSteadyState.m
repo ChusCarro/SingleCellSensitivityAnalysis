@@ -1,4 +1,4 @@
-function simulateSteadyState(pathToSave, cellType, param, values, CL, nCLs, Cai_ind, dt, step_save)
+function simulateSteadyState(pathToSave, cellType, param, values, CL, nCLs, Cai_ind, Idur, dt, step_save)
 
 Cai_ind
 
@@ -6,7 +6,7 @@ initialPath=pwd();
 sim_stat = load([pathToSave '/status.mat']);
 stimulus{1}.ini = 0;
 stimulus{1}.CL = CL;
-stimulus{1}.dur = 1;
+stimulus{1}.dur = Idur;
 stimulus{1}.Istim = sim_stat.IStim;
 
 if(isempty(dir([pathToSave '/SS' num2str(CL)])))
