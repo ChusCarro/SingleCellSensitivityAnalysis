@@ -1,4 +1,4 @@
-function simulateAPDRateADaptation(pathToSave, cellType, param, values, CL, nCLs, Idur, dt, step_save)
+function simulateAPDRateAdaptation(pathToSave, cellType, param, values, CL, nCLs, Idur, dt, step_save)
 
 
 initialPath=pwd();
