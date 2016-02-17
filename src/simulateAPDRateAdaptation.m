@@ -23,7 +23,7 @@ pathAPDRate  = [pathToSave '/APDRate'];
 if(isempty(dir([pathAPDRate '/control'])))
 
     copyfile([pathAPDRate '/base'],[pathAPDRate '/control'])
-    createMainFile([pathAPDRate '/control'],'main_file_APDRate',cellType,[],[],sum(CL.*nCLs),dt,step_save,stimulus,true);
+    createMainFile([pathAPDRate '/control'],'main_file_APDRate',cellType,[],[],sum(CL.*nCLs),dt,step_save,stimulus,false);
 
     cd([pathAPDRate '/control']);
     ! ./runtestem data/main_file_APDRate.dat post/APDRate
@@ -53,7 +53,7 @@ for i=1:length(param)
 
     if(isempty(dir(pathValue)))
       copyfile([pathParam '/base'],pathValue)
-      createMainFile(pathValue,'main_file_APDRate',cellType,param(i),values(j),sum(CL.*nCLs),dt,step_save,stimulus,true);
+      createMainFile(pathValue,'main_file_APDRate',cellType,param(i),values(j),sum(CL.*nCLs),dt,step_save,stimulus,false);
 
       cd(pathValue);
       ! ./runtestem data/main_file_APDRate.dat post/APDRate
