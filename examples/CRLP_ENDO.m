@@ -1,18 +1,18 @@
 addpath([pwd() '/../src'])
 
-pathToSave = '~/SingleCellSensitivityResults/TP06_07ms';
+pathToSave = '~/SingleCellSensitivityResults/CRLP_ENDO';
 mainElvira = '~/Software/TestEM/TestEMSingleCellSensitivity20150728/bin/testem_gcc';
 
-param = [1:13];
+param = [1:15];
 values =[0.70 0.85 1.15 1.30];
-cellType = 3;
+cellType = 14;
 cores=4;
-dt = 0.02;
-step_save=5;
+dt = 0.002;
+step_save=50;
 %[s]=rmdir(Model,'s');
 Imax = 100;
 Istep = 0.1;
-Idur = 0.7;
+Idur = 1;
 Cai_ind = 1;
 
 CL = 1000;

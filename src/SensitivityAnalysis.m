@@ -21,6 +21,6 @@ Param_str = cell(length(param));
 [conduction, IThreshold, Istim] = calculateIThreshold(pathToSave, cellType, Imax, Istep, Idur, dt, step_save)
 
 simulateSteadyState(pathToSave,cellType,param,values,CL,nCLs,Cai_ind,Idur,dt,step_save);
-simulateAPDRateAdaptation(pathToSave, cellType, param, values, [1000 600], [100 100], Idur, dt, step_save)
+% simulateAPDRateAdaptation(pathToSave, cellType, param, values, [1000 600], [100 100], Idur, dt, step_save)
 
 matlabpool close;
